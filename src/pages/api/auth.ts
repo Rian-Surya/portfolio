@@ -29,7 +29,6 @@ export async function GET({ request }: { request: Request }) {
   }
 
   const token = tokenData.access_token;
-  const message = JSON.stringify({ token, provider: 'github' });
 
   const html = `<!DOCTYPE html>
 <html>
@@ -37,20 +36,25 @@ export async function GET({ request }: { request: Request }) {
 <body>
 <p>Authenticating... please wait.</p>
 <script>
-  var msg = 'authorization:github:success:${message}';
+  var token = "${token}";
+  var provider = "github";
+  var message = "authorization:" + provider + ":success:" + JSON.stringify({token: token, provider: provider});
   var attempts = 0;
   var interval = setInterval(function() {
     attempts++;
-    if (window.opener) {
-      window.opener.postMessage(msg, '*');
+    try {
+      if (window.opener) {
+        window.opener.postMessage(message, "*");
+        clearInterval(interval);
+        setTimeout(function() { window.close(); }, 1000);
+        return;
+      }
+    } catch(e) {}
+    if (attempts > 30) {
       clearInterval(interval);
-      setTimeout(function() { window.close(); }, 1000);
+      document.body.innerHTML = "Auth failed. Close and try again.";
     }
-    if (attempts > 20) {
-      clearInterval(interval);
-      document.body.innerHTML = 'Authentication failed. Please close this window and try again.';
-    }
-  }, 200);
+  }, 300);
 </script>
 </body>
 </html>`;
