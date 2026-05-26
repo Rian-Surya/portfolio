@@ -1,0 +1,87 @@
+export const prerender = true;
+
+export async function GET() {
+  const config = `backend:
+  name: github
+  repo: Rian-Surya/portfolio
+  branch: main
+  base_url: https://pradhikta.my.id
+  auth_endpoint: /api/auth
+
+media_folder: public/images
+public_folder: /images
+
+collections:
+  - name: site
+    label: Pengaturan Website
+    files:
+      - name: settings
+        label: Info Utama
+        file: src/content/site/settings.json
+        format: json
+        fields:
+          - { label: Nama Site, name: siteName, widget: string }
+          - { label: Nama Lengkap, name: name, widget: string }
+          - { label: Jabatan, name: title, widget: string }
+          - { label: Tagline, name: tagline, widget: string }
+          - { label: Deskripsi Hero, name: heroDescription, widget: text }
+          - { label: Email, name: email, widget: string }
+          - { label: LinkedIn, name: linkedin, widget: string, required: false }
+          - { label: GitHub, name: github, widget: string, required: false }
+          - { label: ShortsCut URL, name: shortscutUrl, widget: string, required: false }
+  - name: about
+    label: Tentang Saya
+    files:
+      - name: about
+        label: Konten About
+        file: src/content/about/about.json
+        format: json
+        fields:
+          - { label: Judul, name: heading, widget: string }
+          - { label: Judul Italic, name: headingItalic, widget: string }
+          - label: Paragraf
+            name: paragraphs
+            widget: list
+            field: { label: Paragraf, name: text, widget: text }
+          - { label: Sertifikasi, name: certification, widget: string, required: false }
+          - { label: Foto, name: photoUrl, widget: image, required: false }
+  - name: skills
+    label: Keahlian
+    files:
+      - name: skills
+        label: Daftar Skill
+        file: src/content/skills/skills.json
+        format: json
+        fields:
+          - label: Skill
+            name: items
+            widget: list
+            fields:
+              - { label: Icon, name: icon, widget: string }
+              - { label: Judul, name: title, widget: string }
+              - { label: Deskripsi, name: description, widget: text }
+  - name: projects
+    label: Proyek
+    files:
+      - name: projects
+        label: Daftar Proyek
+        file: src/content/projects/projects.json
+        format: json
+        fields:
+          - label: Proyek
+            name: items
+            widget: list
+            fields:
+              - { label: Judul, name: title, widget: string }
+              - { label: Deskripsi, name: description, widget: text }
+              - label: Tags
+                name: tags
+                widget: list
+                field: { label: Tag, name: tag, widget: string }
+              - { label: URL, name: url, widget: string, required: false }
+              - { label: Featured, name: featured, widget: boolean, default: false }`;
+
+  return new Response(config, {
+    headers: { 'Content-Type': 'text/yaml' },
+  });
+}
