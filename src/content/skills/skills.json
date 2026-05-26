@@ -1,0 +1,34 @@
+{
+  "items": [
+    {
+      "icon": "🌐",
+      "title": "Rekayasa Jaringan",
+      "description": "MikroTik (bersertifikat MTCNA), routing, switching, konfigurasi firewall, setup VPN, dan monitoring jaringan."
+    },
+    {
+      "icon": "🖥️",
+      "title": "Server & Infrastruktur",
+      "description": "Manajemen server Linux/Ubuntu, deployment VPS, Docker, Coolify, Nginx reverse proxy, dan konfigurasi SSL."
+    },
+    {
+      "icon": "⚙️",
+      "title": "Otomasi & DevOps",
+      "description": "Workflow otomasi dengan n8n, CI/CD pipeline, GitHub Actions, otomasi proses, dan scripting dengan Python & Bash."
+    },
+    {
+      "icon": "🤖",
+      "title": "AI & Pengembangan Web",
+      "description": "Membangun tools berbasis AI menggunakan Anthropic Claude API, Next.js, React, dan mengintegrasikan LLM ke dalam aplikasi praktis."
+    },
+    {
+      "icon": "🔒",
+      "title": "Manajemen IT",
+      "description": "Koordinasi tim, manajemen proyek IT, hubungan vendor, kebijakan keamanan, dan manajemen aset IT."
+    },
+    {
+      "icon": "📊",
+      "title": "Monitoring Sistem",
+      "description": "Setup dashboard monitoring, sistem alerting, manajemen log, dan memastikan ketersediaan tinggi sistem-sistem kritis."
+    }
+  ]
+}

@@ -1,0 +1,142 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getEntry } from 'astro:content';
+
+const site = await getEntry('site', 'settings');
+const about = await getEntry('about', 'about');
+const skills = await getEntry('skills', 'skills');
+const projects = await getEntry('projects', 'projects');
+
+const s = site.data;
+const a = about.data;
+const sk = skills.data;
+const pr = projects.data;
+---
+
+<Layout title={`${s.name} — ${s.title}`}>
+  <!-- NAV -->
+  <nav id="nav">
+    <div class="nav-logo">{s.siteName}</div>
+    <ul class="nav-links">
+      <li><a href="#about">Tentang</a></li>
+      <li><a href="#skills">Keahlian</a></li>
+      <li><a href="#projects">Proyek</a></li>
+      <li><a href="#contact">Kontak</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-line"></div>
+    <div class="hero-content">
+      <div class="hero-tag">{s.tagline}</div>
+      <h1>{s.name.split(' ').slice(0,2).join(' ')}<br /><em>{s.name.split(' ').slice(2).join(' ')}</em></h1>
+      <p class="hero-desc">{s.heroDescription}</p>
+      <div class="hero-cta">
+        <a href="#projects" class="btn btn-primary">Lihat Proyek →</a>
+        <a href="#contact" class="btn btn-ghost">Hubungi Saya</a>
+      </div>
+    </div>
+    <div class="hero-scroll"><div class="scroll-line"></div>Gulir</div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="section-label">Tentang</div>
+    <div class="about-grid">
+      <div class="about-img reveal">
+        <div class="about-img-placeholder">
+          {a.photoUrl ? (
+            <img src={a.photoUrl} alt={s.name} />
+          ) : (
+            <>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" style="width:48px;height:48px;opacity:.3">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+              </svg>
+              <span>Foto kamu di sini</span>
+            </>
+          )}
+        </div>
+        {a.certification && <div class="cert-badge">{a.certification}</div>}
+      </div>
+      <div class="about-text reveal">
+        <h2>{a.heading}<br /><em>{a.headingItalic}</em></h2>
+        {a.paragraphs.map(p => <p>{p}</p>)}
+        <a href="#contact" class="btn btn-ghost" style="margin-top:1rem;">Mari Terhubung →</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="section-label">Keahlian</div>
+    <h2 style="margin-bottom:3rem;">Yang saya <em>kuasai</em></h2>
+    <div class="skills-grid reveal">
+      {sk.items.map(skill => (
+        <div class="skill-card">
+          <div class="skill-icon">{skill.icon}</div>
+          <h3>{skill.title}</h3>
+          <p>{skill.description}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="section-label">Proyek</div>
+    <h2 style="margin-bottom:3rem;">Karya <em>pilihan</em></h2>
+    <div class="projects-grid reveal">
+      {pr.items.map((project, i) => (
+        <div class={`project-card ${project.featured ? 'featured' : ''}`}>
+          <div class="project-num">{String(i + 1).padStart(2, '0')}{project.featured ? ' — Unggulan' : ''}</div>
+          <h3>{project.title}</h3>
+          <p>{project.description}</p>
+          <div class="project-tags">
+            {project.tags.map(tag => <span class="tag">{tag}</span>)}
+          </div>
+          {project.url && <a href={project.url} class="project-link" target="_blank">Kunjungi Proyek →</a>}
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="contact-inner reveal">
+      <div class="section-label" style="justify-content:center;margin-bottom:2rem;">Kontak</div>
+      <h2>Mari bekerja <em>bersama</em></h2>
+      <p>Punya proyek yang ingin didiskusikan atau mencari peluang kolaborasi? Saya selalu terbuka untuk percakapan yang menarik.</p>
+      <a href={`mailto:${s.email}`} class="btn btn-primary">Kirim Email →</a>
+      <div class="social-links">
+        {s.linkedin && <a href={s.linkedin} class="social-link" target="_blank">↗ LinkedIn</a>}
+        {s.github && <a href={s.github} class="social-link" target="_blank">↗ GitHub</a>}
+        {s.shortscutUrl && <a href={s.shortscutUrl} class="social-link" target="_blank">↗ ShortsCut AI</a>}
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>© {new Date().getFullYear()} {s.name}</span>
+    <span>pradhikta.my.id</span>
+  </footer>
+
+  <script>
+    const nav = document.getElementById('nav')
+    window.addEventListener('scroll', () => nav?.classList.toggle('scrolled', window.scrollY > 50))
+    const reveals = document.querySelectorAll('.reveal')
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach((e, i) => { if (e.isIntersecting) setTimeout(() => e.target.classList.add('visible'), i * 100) })
+    }, { threshold: 0.1 })
+    reveals.forEach(el => observer.observe(el))
+  </script>
+</Layout>

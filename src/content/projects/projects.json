@@ -1,0 +1,23 @@
+{
+  "items": [
+    {
+      "title": "ShortsCut AI",
+      "description": "Tools berbasis AI yang secara otomatis memindai video YouTube, mendeteksi momen paling viral, dan menghasilkan klip pendek lengkap dengan caption dan hashtag. Dibangun dengan Next.js, Claude API, FFmpeg, dan yt-dlp.",
+      "tags": ["Next.js", "Claude API", "FFmpeg", "yt-dlp", "n8n"],
+      "url": "https://shortscut.pradhikta.my.id",
+      "featured": true
+    },
+    {
+      "title": "Infrastruktur Jaringan",
+      "description": "Merancang dan mengimplementasikan infrastruktur jaringan enterprise untuk broker forex, termasuk redundant link, segmentasi VLAN, dan automated failover.",
+      "tags": ["MikroTik", "VLAN", "BGP"],
+      "featured": false
+    },
+    {
+      "title": "Workflow Otomasi",
+      "description": "Membangun workflow otomasi n8n untuk proses internal, mengurangi tugas manual dan meningkatkan efisiensi tim lintas departemen.",
+      "tags": ["n8n", "Python", "Integrasi API"],
+      "featured": false
+    }
+  ]
+}
