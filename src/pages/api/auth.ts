@@ -35,23 +35,23 @@ export async function GET({ request }: { request: Request }) {
 <html>
 <head><title>Authenticating...</title></head>
 <body>
-<script>
-  (function() {
-    function send() {
-      if (window.opener) {
-        window.opener.postMessage(
-          'authorization:github:success:' + '${message}',
-          window.location.origin
-        );
-        setTimeout(function() { window.close(); }, 500);
-      } else {
-        setTimeout(send, 100);
-      }
-    }
-    send();
-  })();
-</script>
 <p>Authenticating... please wait.</p>
+<script>
+  var msg = 'authorization:github:success:${message}';
+  var attempts = 0;
+  var interval = setInterval(function() {
+    attempts++;
+    if (window.opener) {
+      window.opener.postMessage(msg, '*');
+      clearInterval(interval);
+      setTimeout(function() { window.close(); }, 1000);
+    }
+    if (attempts > 20) {
+      clearInterval(interval);
+      document.body.innerHTML = 'Authentication failed. Please close this window and try again.';
+    }
+  }, 200);
+</script>
 </body>
 </html>`;
 
