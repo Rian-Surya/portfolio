@@ -1,0 +1,51 @@
+---
+import { getLangFromUrl, switchLangPath, getOtherLang } from '../i18n/translations'
+
+const lang = getLangFromUrl(new URL(Astro.request.url))
+const currentPath = new URL(Astro.request.url).pathname
+const otherLang = getOtherLang(lang)
+const otherPath = switchLangPath(currentPath, otherLang)
+---
+
+<div class="lang-switcher">
+  <a
+    href={`/${lang === 'en' ? 'en' : 'en'}${currentPath.replace(/^\/(en|id)/, '')}`}
+    class={lang === 'en' ? 'lang-btn active' : 'lang-btn'}
+    aria-label="Switch to English"
+  >EN</a>
+  <span class="lang-divider">|</span>
+  <a
+    href={`/${lang === 'id' ? 'id' : 'id'}${currentPath.replace(/^\/(en|id)/, '')}`}
+    class={lang === 'id' ? 'lang-btn active' : 'lang-btn'}
+    aria-label="Ganti ke Bahasa Indonesia"
+  >ID</a>
+</div>
+
+<style>
+  .lang-switcher {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+  }
+  .lang-btn {
+    color: #444;
+    text-decoration: none;
+    padding: 3px 6px;
+    border-radius: 4px;
+    transition: color 0.15s, background 0.15s;
+  }
+  .lang-btn:hover {
+    color: #c9a96e;
+  }
+  .lang-btn.active {
+    color: #c9a96e;
+    background: rgba(201, 169, 110, 0.08);
+  }
+  .lang-divider {
+    color: #333;
+    font-size: 10px;
+  }
+</style>
