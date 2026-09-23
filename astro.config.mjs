@@ -7,4 +7,11 @@ export default defineConfig({
   adapter: node({
     mode: 'standalone',
   }),
+  i18n: {
+    defaultLocale: 'id',
+    locales: ['en', 'id'],
+    routing: {
+      prefixDefaultLocale: true,
+    },
+  },
 });
