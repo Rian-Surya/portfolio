@@ -1,0 +1,238 @@
+---
+import Layout from '../../layouts/Layout.astro'
+import { useTranslations, type Lang } from '../../i18n/translations'
+
+export function getStaticPaths() {
+  return [
+    { params: { lang: 'en' } },
+    { params: { lang: 'id' } },
+  ]
+}
+
+const { lang } = Astro.params as { lang: Lang }
+const t = useTranslations(lang)
+---
+
+<Layout lang={lang}>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-inner">
+        <h1 class="hero-title">
+          Rian Surya <em>Pradhikta</em>
+        </h1>
+        <p class="hero-tagline">{t.hero.tagline}</p>
+        <div class="hero-cta">
+          <a href="#projects" class="btn-primary">{t.hero.cta_projects}</a>
+          <a href="#contact" class="btn-ghost">{t.hero.cta_contact}</a>
+        </div>
+      </div>
+      <div class="scroll-hint">
+        <span class="scroll-line"></span>
+        <span class="scroll-label">{t.hero.scroll}</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-image">
+          <div class="photo-placeholder">
+            <span>Foto kamu di sini</span>
+          </div>
+          <div class="cert-badge">🏆 {t.about.cert}</div>
+        </div>
+        <div class="about-content">
+          <p class="section-label">{t.about.section_title}</p>
+          <h2 class="section-heading">{t.about.heading} <em>{t.about.heading_italic}</em></h2>
+          <p class="about-bio">{t.about.bio1}</p>
+          <p class="about-bio">{t.about.bio2}</p>
+          <p class="about-bio">{t.about.bio3}</p>
+          <div class="about-links">
+            <a href="https://www.linkedin.com/in/rian-surya-pradhikta/" target="_blank" class="btn-ghost-sm">↗ LinkedIn</a>
+            <a href="https://github.com/Rian-Surya" target="_blank" class="btn-ghost-sm">↗ GitHub</a>
+            <a href="https://shortscut.pradhikta.my.id" target="_blank" class="btn-ghost-sm">↗ ShortsCut AI</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills" class="skills-section">
+    <div class="container">
+      <p class="section-label">{t.skills.section_title}</p>
+      <h2 class="section-heading">{t.skills.heading} <em>{t.skills.heading_italic}</em></h2>
+      <div class="skills-grid">
+        {t.skills.items.map((skill) => (
+          <div class="skill-card">
+            <span class="skill-icon">{skill.icon}</span>
+            <h3 class="skill-title">{skill.title}</h3>
+            <p class="skill-desc">{skill.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="container">
+      <p class="section-label">{t.projects.section_title}</p>
+      <h2 class="section-heading">{t.projects.heading} <em>{t.projects.heading_italic}</em></h2>
+      <div class="projects-list">
+        {t.projects.items.map((project) => (
+          <div class="project-card">
+            <div class="project-number">{project.number}</div>
+            <div class="project-body">
+              <div class="project-top">
+                {project.badge && <span class="project-badge">{project.badge}</span>}
+                <h3 class="project-title">{project.title}</h3>
+              </div>
+              <p class="project-desc">{project.desc}</p>
+              <div class="project-tags">
+                {project.tags.map((tag) => (
+                  <span class="project-tag">{tag}</span>
+                ))}
+              </div>
+              {project.url && (
+                <a href={project.url} target="_blank" class="project-link">{t.projects.visit}</a>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="contact-section">
+    <div class="container">
+      <p class="section-label">{t.contact.section_title}</p>
+      <h2 class="section-heading">{t.contact.heading} <em>{t.contact.heading_italic}</em></h2>
+      <p class="contact-desc">{t.contact.desc}</p>
+      <div class="contact-links">
+        <a href="mailto:your@email.com" class="btn-primary">{t.contact.cta_email}</a>
+        <div class="social-links">
+          <a href="https://www.linkedin.com/in/rian-surya-pradhikta/" target="_blank" class="btn-ghost-sm">↗ LinkedIn</a>
+          <a href="https://github.com/Rian-Surya" target="_blank" class="btn-ghost-sm">↗ GitHub</a>
+          <a href="https://shortscut.pradhikta.my.id" target="_blank" class="btn-ghost-sm">↗ ShortsCut AI</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</Layout>
+
+<style>
+  /* HERO */
+  .hero {
+    min-height: 92vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+  }
+  .hero-inner { max-width: 680px; padding: 4rem 0; }
+  .hero-title {
+    font-family: var(--font-serif);
+    font-size: clamp(40px, 7vw, 72px);
+    font-weight: 400;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.25rem;
+  }
+  .hero-title em { font-style: italic; color: var(--gold); }
+  .hero-tagline { font-size: 16px; color: var(--muted); font-weight: 300; max-width: 520px; margin-bottom: 2rem; line-height: 1.7; }
+  .hero-cta { display: flex; gap: 12px; flex-wrap: wrap; }
+  .scroll-hint { position: absolute; bottom: 2rem; left: 2rem; display: flex; align-items: center; gap: 12px; }
+  .scroll-line { width: 40px; height: 1px; background: var(--muted2); }
+  .scroll-label { font-size: 11px; color: var(--muted2); letter-spacing: 0.1em; text-transform: uppercase; }
+
+  /* BUTTONS */
+  .btn-primary {
+    display: inline-flex; align-items: center;
+    background: var(--gold); color: #000;
+    padding: 10px 20px; border-radius: 6px;
+    font-size: 14px; font-weight: 500;
+    text-decoration: none; transition: opacity 0.15s;
+  }
+  .btn-primary:hover { opacity: 0.85; }
+  .btn-ghost {
+    display: inline-flex; align-items: center;
+    border: 1px solid var(--border); color: var(--muted);
+    padding: 10px 20px; border-radius: 6px;
+    font-size: 14px; text-decoration: none;
+    transition: border-color 0.15s, color 0.15s;
+  }
+  .btn-ghost:hover { border-color: var(--muted); color: var(--text); }
+  .btn-ghost-sm {
+    display: inline-flex; align-items: center;
+    border: 1px solid var(--border); color: var(--muted);
+    padding: 6px 12px; border-radius: 6px;
+    font-size: 12px; text-decoration: none;
+    transition: border-color 0.15s, color 0.15s;
+  }
+  .btn-ghost-sm:hover { border-color: var(--gold); color: var(--gold); }
+
+  /* ABOUT */
+  .about-grid { display: grid; grid-template-columns: 1fr 1.5fr; gap: 4rem; align-items: start; }
+  .photo-placeholder {
+    aspect-ratio: 3/4; background: var(--bg2);
+    border: 1px solid var(--border); border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--muted2); font-size: 13px;
+  }
+  .cert-badge { margin-top: 12px; font-size: 12px; color: var(--gold); text-align: center; }
+  .about-bio { font-size: 15px; color: #888; line-height: 1.75; margin-bottom: 1rem; }
+  .about-links { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 1.5rem; }
+
+  /* SKILLS */
+  .skills-section { background: var(--bg2); }
+  .skills-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+  .skill-card {
+    background: var(--bg); border: 1px solid var(--border);
+    border-radius: 10px; padding: 1.5rem;
+    transition: border-color 0.15s;
+  }
+  .skill-card:hover { border-color: var(--muted2); }
+  .skill-icon { font-size: 24px; display: block; margin-bottom: 12px; }
+  .skill-title { font-size: 15px; font-weight: 500; margin-bottom: 8px; }
+  .skill-desc { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+  /* PROJECTS */
+  .projects-list { display: flex; flex-direction: column; gap: 1px; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+  .project-card { display: flex; gap: 1.5rem; padding: 2rem; background: var(--bg2); border-bottom: 1px solid var(--border); transition: background 0.15s; }
+  .project-card:last-child { border-bottom: none; }
+  .project-card:hover { background: #131313; }
+  .project-number { font-size: 11px; color: var(--muted2); min-width: 30px; padding-top: 4px; }
+  .project-body { flex: 1; }
+  .project-top { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  .project-badge { font-size: 10px; color: var(--gold); border: 1px solid rgba(201,169,110,0.3); border-radius: 4px; padding: 2px 8px; }
+  .project-title { font-size: 18px; font-weight: 500; }
+  .project-desc { font-size: 14px; color: var(--muted); line-height: 1.65; margin-bottom: 12px; }
+  .project-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
+  .project-tag { font-size: 11px; background: var(--bg); border: 1px solid var(--border); border-radius: 4px; padding: 2px 8px; color: var(--muted); }
+  .project-link { font-size: 13px; color: var(--gold); text-decoration: none; }
+  .project-link:hover { text-decoration: underline; }
+
+  /* CONTACT */
+  .contact-section { border-top: 1px solid var(--border); }
+  .contact-desc { font-size: 16px; color: var(--muted); max-width: 500px; margin-bottom: 2rem; line-height: 1.7; }
+  .contact-links { display: flex; flex-direction: column; gap: 1rem; }
+  .social-links { display: flex; gap: 8px; flex-wrap: wrap; }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    .about-grid { grid-template-columns: 1fr; }
+    .skills-grid { grid-template-columns: 1fr 1fr; }
+    .project-card { flex-direction: column; }
+  }
+  @media (max-width: 480px) {
+    .skills-grid { grid-template-columns: 1fr; }
+  }
+</style>
